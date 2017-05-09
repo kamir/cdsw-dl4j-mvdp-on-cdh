@@ -11,7 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by kamir on 09.05.17.
+ *
+ * A Flume Interceptor which transforms an incomming PNG file
+ * into a PGM byte[].
+ *
  */
 public class ImageInterceptor implements Interceptor {
 

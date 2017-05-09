@@ -138,8 +138,8 @@ public class ImageClassifierHDD {
             MultiLayerNetwork loadedModel = ModelWrapper.getMultiLayerNetworkFromLocalDisc_latest( modelID );
 
             // Process one image ... in two formats ...
-            String fnPGM = "/GITHUB.cloudera.internal/cdsw-deeplearning4j-demo-02/MNIST_images_pgm/3_01.pgm";
-            String fnPNG = "/GITHUB.cloudera.internal/cdsw-deeplearning4j-demo-02/MNIST_images/3_01.png";
+            String fnPGM = "./MNIST_images_pgm/3_01.pgm";
+            String fnPNG = "./MNIST_images/3_01.png";
 
             File f1 = new File(fnPGM);
             File f2 = new File(fnPNG);

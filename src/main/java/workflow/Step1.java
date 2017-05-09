@@ -4,7 +4,9 @@ import image.ImageConverter;
 import java.io.File;
 
 /**
- * Created by kamir on 09.05.17.
+ * Convert example images.
+ *
+ *
  */
 public class Step1 {
 

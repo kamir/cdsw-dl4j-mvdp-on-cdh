@@ -63,8 +63,6 @@ public class ImageTransformer {
 
         try {
 
-
-
             // System.out.println( file.getAbsolutePath() );
 
             File[] images = file.listFiles(new ImageFileFilter());

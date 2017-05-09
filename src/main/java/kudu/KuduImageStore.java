@@ -1,8 +1,8 @@
 package kudu;
 
+import image.ImageConverter;
 import io.IdxReader;
 import io.filefilters.PGMFileFilter;
-import io.filefilters.PNGFileFilter;
 import org.apache.kudu.ColumnSchema;
 import org.apache.kudu.Schema;
 import org.apache.kudu.Type;
@@ -12,9 +12,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -172,17 +170,7 @@ public class KuduImageStore {
      */
     public static void convert_PNG_TO_PGM(File baseFolder, File baseFolderPGM) throws Exception {
 
-        BufferedWriter bw = new BufferedWriter( new FileWriter( "script.sh" ) );
-
-        for( File f : baseFolder.listFiles( new PNGFileFilter() ) ) {
-
-            String cmd = store_as_PGM( f.getAbsolutePath(), baseFolderPGM );
-
-            bw.write( cmd + "\n");
-
-        }
-
-        bw.close();
+        ImageConverter.convert_PNG_TO_PGM( baseFolder, baseFolderPGM, "./bin" );
 
     }
 
@@ -352,33 +340,7 @@ public class KuduImageStore {
     }
 
 
-    /**
-     * Reads the binary image into a BufferedImage and writes it to a different format ...   !!!
-     *
-     * Currently, the PGM export is not complete. We simple generate a call to the convert tool
-     * and collect all those calls in a text file, which works as a shell script later.
-     *
-     * @param imageName
-     * @return
-     * @throws IOException
-     */
-    public static String store_as_PGM(String imageName, File targetFolder) throws Exception {
 
-        // open image
-        File imgPath = new File(imageName);
-
-        File in = new File( imageName );
-        File path = in.getParentFile();
-
-        String stem = in.getName();
-        String name = stem.substring(0, stem.length()-4 );
-
-        Process p = new ProcessBuilder("/usr/local/bin/convert", "-colorspace gray", "-depth 8", imgPath.getAbsolutePath(), targetFolder.getAbsolutePath() + "/" + name +".pgm").start();
-        int i = p.waitFor();
-
-        return "/usr/local/bin/convert -colorspace gray -depth 8 " + imgPath.getAbsolutePath() + " " + targetFolder.getAbsolutePath() + "/" + name +".pgm";
-
-    }
 
 
 }

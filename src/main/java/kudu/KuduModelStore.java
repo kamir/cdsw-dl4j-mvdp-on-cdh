@@ -157,7 +157,7 @@ public class KuduModelStore {
      */
     public static void convert_PNG_TO_PGM(File baseFolder, File baseFolderPGM) throws Exception {
 
-        BufferedWriter bw = new BufferedWriter( new FileWriter( "script.sh" ) );
+        BufferedWriter bw = new BufferedWriter( new FileWriter( "convert-png-to-pgm.sh" ) );
 
         for( File f : baseFolder.listFiles( new PNGFileFilter() ) ) {
 

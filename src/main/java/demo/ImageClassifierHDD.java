@@ -190,6 +190,8 @@ public class ImageClassifierHDD {
 
             statsCollector.append( "\n" + evil.stats() );
 
+            // ADD CODE TO PERSIST THE MODEL Quality and Parameters to store (Model Filename as ID)
+            // public static void updateModelEvaluationResult( String id, Object model ) {
         }
 
         double t1 = System.currentTimeMillis();

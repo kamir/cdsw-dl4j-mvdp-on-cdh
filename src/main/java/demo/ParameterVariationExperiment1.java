@@ -5,7 +5,6 @@ import io.ModelWrapper;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * Based on the ImageClassifierHDD program, we generate multiple models with different parameter settings.
@@ -69,7 +68,8 @@ public class ParameterVariationExperiment1 {
                             // nothing to do ...
                         }
                         else {
-                            // analyse the current parameter set.
+                            // learn using the current parameter set, defined via static properties of ImageClassifierHDD:
+
                             ImageClassifierHDD.main(null);
 
                             br.write( ImageClassifierHDD.statsCollector.toString() );

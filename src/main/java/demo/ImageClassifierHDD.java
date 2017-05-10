@@ -51,8 +51,8 @@ public class ImageClassifierHDD {
 
     private static Logger log = LoggerFactory.getLogger(ImageClassifierHDD.class);
 
-    private static boolean doApplyModel = true;  // only apply learned model to some data
-    private static boolean doLearn = true;  // only learn model form training data
+    private static boolean doApplyModel = true;  // should we apply a learned model to some data?
+    private static boolean doLearn = false;  // should we learn a model from training data?
 
     static String modelID = "default";
 

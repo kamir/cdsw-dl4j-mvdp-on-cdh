@@ -3,6 +3,7 @@ package image;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
@@ -59,6 +60,27 @@ public class ImageFrame {
 
     static Vector<ImageDebugFrame> frames = new Vector<ImageDebugFrame>();
 
+
+    public void showSinlgeImage(byte[] rawDataFromFile) throws IOException {
+
+        System.out.println( "TAKE data from byte[] ... " );
+
+        if ( zFrames < maxFrames ) {
+
+            ByteArrayInputStream bis = new ByteArrayInputStream(rawDataFromFile);
+
+            BufferedImage bufferedImage = ImageIO.read( bis );
+
+            ImageDebugFrame f = new ImageDebugFrame(bufferedImage);
+            frames.add( f );
+
+            zFrames++;
+
+            f.setVisible(true);
+
+        }
+
+    }
 
     public void showSinlgeImage(String path) throws IOException {
 

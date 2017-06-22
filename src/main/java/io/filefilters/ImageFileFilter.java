@@ -5,7 +5,7 @@ import java.io.FileFilter;
 
 public class ImageFileFilter implements FileFilter
     {
-        private final String[] okFileExtensions = new String[] { "png" , "jpeg"};
+        private final String[] okFileExtensions = new String[] { "png" , "jpeg", "jpg" };
 
         public boolean accept(File file)
         {

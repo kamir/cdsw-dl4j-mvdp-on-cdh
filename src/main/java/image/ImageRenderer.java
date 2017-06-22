@@ -14,8 +14,18 @@ import java.io.IOException;
  *
  * @author Adam Gibson
  */
-public class ImageRender {
+public class ImageRenderer {
 
+
+    /**
+     * NDArrays are used by Deeplearning4J.
+     *
+     * In order to inspect such an array, we render it as a BufferedImage and write it into a file to local disc.
+     *
+     * @param image
+     * @param path
+     * @throws IOException
+     */
     public static void render(INDArray image, String path) throws IOException {
 
         BufferedImage imageToRender = null;

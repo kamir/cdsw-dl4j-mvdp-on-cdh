@@ -56,7 +56,9 @@ public class ImageInterceptor implements Interceptor {
 
 
             event.setBody( converted );
+
             // Let the enriched event go
+
             return event;
         }
 

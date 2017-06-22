@@ -1,10 +1,18 @@
 package image;
 
+import com.google.gson.Gson;
 import io.filefilters.PNGFileFilter;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.nd4j.linalg.api.ndarray.INDArray;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+import java.io.*;
 
 /**
  * Created by kamir on 09.05.17.
@@ -63,6 +71,86 @@ public class ImageConverter {
         int i = p.waitFor();
 
         return "/usr/local/bin/convert -colorspace gray -depth 8 " + imgPath.getAbsolutePath() + " " + targetFolder.getAbsolutePath() + "/" + name +".pgm";
+
+    }
+
+    public static BufferedImage getBufferedImage(INDArray array) {
+
+        System.out.println("Array.rank(): " + array.rank());
+        System.out.println("Size(-1): " + array.size(-1));
+        System.out.println("Size(-2): " + array.size(-2));
+
+        BufferedImage imageToRender = new BufferedImage(array.columns(),array.rows(),BufferedImage.TYPE_BYTE_GRAY);
+        for( int x = 0; x < array.columns(); x++ ){
+            for (int y = 0; y < array.rows(); y++ ) {
+                System.out.println("x: " + (x) + " y: " + y);
+                imageToRender.getRaster().setSample(x, y, 0, (int) (255 * array.getRow(y).getDouble(x)));
+            }
+        }
+
+        return imageToRender;
+    }
+
+    /**
+     * Converts a given Image into a BufferedImage
+     *
+     * @param img The Image to be converted
+     * @return The converted BufferedImage
+     */
+    public static BufferedImage toBufferedImage(Image img) {
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
+
+        // Create a buffered image with transparency
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        // Draw the image on to the buffered image
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        // Return the buffered image
+        return bimage;
+    }
+
+    public static BufferedImage toImage(INDArray matrix) {
+        BufferedImage img = new BufferedImage(matrix.rows(), matrix.columns(), BufferedImage.TYPE_INT_ARGB);
+        WritableRaster r = img.getRaster();
+        int[] equiv = new int[matrix.length()];
+        for (int i = 0; i < equiv.length; i++) {
+            equiv[i] = (int) matrix.getScalar(i).element();
+        }
+        r.setDataElements(0, 0, matrix.rows(), matrix.columns(), equiv);
+        return img;
+    }
+
+
+    public static String getImageMetadataAsJSON(byte[] imageBytes) throws Exception {
+
+        //Parser method parameters
+        Parser parser = new AutoDetectParser();
+        BodyContentHandler handler = new BodyContentHandler();
+        Metadata metadata = new Metadata();
+
+        InputStream inputstream = new ByteArrayInputStream(imageBytes);
+
+        ParseContext context = new ParseContext();
+
+        parser.parse(inputstream, handler, metadata, context);
+
+        // System.out.println(handler.toString());
+
+        //getting the list of all meta data elements
+        String[] metadataNames = metadata.names();
+
+        for(String name : metadataNames) {
+            System.out.println(name + "  :  " + metadata.get(name));
+        }
+
+        Gson gson = new Gson();
+
+        return gson.toJson( metadata  );
 
     }
 

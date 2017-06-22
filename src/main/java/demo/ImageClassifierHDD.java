@@ -150,7 +150,7 @@ public class ImageClassifierHDD {
             BufferedImage bi1 = ImageIO.read( f1 );
             BufferedImage bi2 = ImageIO.read( f2 );
 
-            ImageFrame.getImageFrame().compareImages(bi1,bi2);
+            // ImageFrame.getImageFrame().compareImages(bi1,bi2);
 
             ImageLoader loader = new ImageLoader();
 
